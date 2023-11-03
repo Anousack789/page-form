@@ -29,8 +29,8 @@ export default function RootLayout({
           >
             {children}
             <Toaster />
+            <Messenger />
           </ThemeProvider>
-          <Messenger />
         </body>
       </html>
     </ClerkProvider>
