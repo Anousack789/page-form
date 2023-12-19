@@ -1,10 +1,14 @@
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
-import { ClerkProvider } from "@clerk/nextjs";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Messenger from "@/components/Messenger";
+
+import SessionProvider from "@/lib/provider/SessionProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import Logo from "@/components/Logo";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,21 +22,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Toaster />
-            <Messenger />
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SessionProvider>
+            <div className="flex flex-col min-h-screen min-w-full bg-background max-h-screen">
+              <nav className="flex items-center justify-between border-b border-border h-[60px] px-4 py-2">
+                <Logo />
+                <div className="flex items-center gap-4">
+                  <ThemeSwitcher />
+                </div>
+              </nav>
+              {children}
+              <Toaster />
+            </div>
+          </SessionProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

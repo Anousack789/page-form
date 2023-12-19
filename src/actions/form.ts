@@ -1,13 +1,18 @@
 "use server";
 
-import prisma from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { prisma } from "@/lib/db/prisma";
+import { formSchemaType } from "@/schemas/form";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 class UserNotFoundErr extends Error {}
 export async function GetFormStats() {
-  const user = await currentUser();
-  if (!user) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user) {
+    // return redirect("/login");
     throw new UserNotFoundErr();
   }
+  const { user } = session;
   const stats = await prisma.form.aggregate({
     where: {
       userId: user.id,
@@ -33,6 +38,51 @@ export async function GetFormStats() {
   };
 }
 
-export async function CreateForm(
-  data: { name: string; description: string } | undefined
-) {}
+export async function CreateForm(data: formSchemaType) {
+  // const validation = formSchema.safeParse(data);
+  // if (!validation.success) {
+  //   throw new Error("form not valid");
+  // }
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user) {
+    return redirect("/login");
+  }
+  const form = await prisma.form.create({
+    data: {
+      ...data,
+      userId: session.user.id,
+    },
+  });
+
+  return form.id;
+}
+
+export const GetForms = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new UserNotFoundErr();
+  }
+  try {
+    const forms = await prisma.form.findMany({});
+    return forms;
+  } catch (err: any) {
+    throw err;
+  }
+};
+
+export const GetFormById = async (id: string) => {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user) {
+    throw new UserNotFoundErr();
+  }
+  try {
+    const form = await prisma.form.findUnique({
+      where: {
+        id,
+      },
+    });
+    return form;
+  } catch (err: any) {
+    throw err;
+  }
+};
