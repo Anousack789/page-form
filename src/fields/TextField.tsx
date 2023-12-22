@@ -1,9 +1,23 @@
-import { ElementType, FormElementProps } from '@/components/FormElement';
+import {
+  ElementsType,
+  FormElementInstance,
+  FormElements,
+} from '@/components/FormElements';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { MdOutlineTextFields } from 'react-icons/md';
-const type: ElementType = 'TextField';
-export const TextFieldFormElement: FormElementProps = {
+const type: ElementsType = 'TextField';
+
+const extraAttributes = {
+  label: 'Text Field',
+  helperText: 'Helper text',
+  required: true,
+  placeHolder: 'Value here...',
+};
+
+export const TextFieldFormElement: FormElements = {
   type,
-  designerComponent: () => <div>Designer component</div>,
+  designerComponent: DesignerComponent,
   formConpoment: () => <div>Designer component</div>,
   propertiesComponent: () => <div>Designer component</div>,
   designerBtnElement: {
@@ -13,11 +27,31 @@ export const TextFieldFormElement: FormElementProps = {
   construct: (id: string) => ({
     id,
     type,
-    extraAttributes: {
-      label: 'Text Field',
-      helperText: 'Helper Text',
-      required: false,
-      placeholder: 'Value here...',
-    },
+    extraAttributes,
   }),
 };
+
+type CustomInstance = FormElementInstance & {
+  extraAttributes: typeof extraAttributes;
+};
+
+function DesignerComponent({
+  elementInstance,
+}: {
+  elementInstance: FormElementInstance;
+}) {
+  const element = elementInstance as CustomInstance;
+  const { label, required, placeHolder, helperText } = element.extraAttributes;
+  return (
+    <div className='flex w-full flex-col gap-2'>
+      <Label>
+        {element.extraAttributes.label}
+        {element.extraAttributes.required && '*'}
+      </Label>
+      <Input readOnly disabled placeholder={placeHolder} />
+      {helperText && (
+        <p className='text-[0.8rem] text-muted-foreground'>{helperText}</p>
+      )}
+    </div>
+  );
+}

@@ -1,10 +1,10 @@
 'use client';
 import { TextFieldFormElement } from '@/fields/TextField';
 
-export type ElementType = 'TextField';
-export type FormElementProps = {
-  type: ElementType;
-  designerComponent: React.FC;
+export type ElementsType = 'TextField';
+export type FormElements = {
+  type: ElementsType;
+  designerComponent: React.FC<{ elementInstance: FormElementInstance }>;
   formConpoment: React.FC;
   propertiesComponent: React.FC;
   designerBtnElement: {
@@ -16,12 +16,12 @@ export type FormElementProps = {
 };
 
 type FormElementTypes = {
-  [key in ElementType]: FormElementProps;
+  [key in ElementsType]: FormElements;
 };
 
 export type FormElementInstance = {
   id: string;
-  type: ElementType;
+  type: ElementsType;
   extraAttributes?: Record<string, any>;
 };
 

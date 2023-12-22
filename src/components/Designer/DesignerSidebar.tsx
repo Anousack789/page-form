@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FormElements } from '../FormElement';
+import { FormElements } from '../FormElements';
 import DesignerSidebarBtnElement from './DesignerSidebarBtnElement';
 
 function DesignerSidebar() {
