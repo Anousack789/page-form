@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
+import { LuMonitor, LuMoon, LuSun } from 'react-icons/lu';
 
 function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
@@ -15,15 +15,15 @@ function ThemeSwitcher() {
   return (
     <>
       <Tabs defaultValue={theme}>
-        <TabsList className="border">
-          <TabsTrigger value="light" onClick={() => setTheme("light")}>
-            <SunIcon className="h-[1.2rem] w-[1.2rem]" />
+        <TabsList className='border'>
+          <TabsTrigger value='light' onClick={() => setTheme('light')}>
+            <LuSun className='h-[1.2rem] w-[1.2rem]' />
           </TabsTrigger>
-          <TabsTrigger value="dark" onClick={() => setTheme("dark")}>
-            <MoonIcon className="h-[1.2rem] w-[1.2rem]" />
+          <TabsTrigger value='dark' onClick={() => setTheme('dark')}>
+            <LuMoon className='h-[1.2rem] w-[1.2rem]' />
           </TabsTrigger>
-          <TabsTrigger value="system" onClick={() => setTheme("system")}>
-            <MonitorIcon className="h-[1.2rem] w-[1.2rem]" />
+          <TabsTrigger value='system' onClick={() => setTheme('system')}>
+            <LuMonitor className='h-[1.2rem] w-[1.2rem]' />
           </TabsTrigger>
         </TabsList>
       </Tabs>

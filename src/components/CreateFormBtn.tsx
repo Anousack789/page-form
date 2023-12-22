@@ -1,10 +1,10 @@
-"use client";
-import { formSchema, formSchemaType } from "@/schemas/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FilePlus, RefreshCwIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Button } from "./ui/button";
+'use client';
+import { formSchema, formSchemaType } from '@/schemas/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { Button } from './ui/button';
 import {
   Dialog,
   DialogClose,
@@ -14,22 +14,23 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
+} from './ui/dialog';
 
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { toast } from "./ui/use-toast";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
-import { CreateForm } from "@/actions/form";
-import { useRouter } from "next/navigation";
+import { CreateForm } from '@/actions/form';
+import { useRouter } from 'next/navigation';
+import { LuFilePlus, LuRefreshCw } from 'react-icons/lu';
+import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { toast } from './ui/use-toast';
 
 function CreateFormBtn() {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      description: "",
+      name: '',
+      description: '',
     },
   });
 
@@ -37,19 +38,19 @@ function CreateFormBtn() {
     try {
       const form = await CreateForm({
         name: value.name,
-        description: value.description ?? "",
+        description: value.description ?? '',
       });
       router.push(`/builder/${form}`);
       toast({
-        title: "Success",
-        description: "Create form success",
-        variant: "default",
+        title: 'Success',
+        description: 'Create form success',
+        variant: 'default',
       });
     } catch (err) {
       toast({
-        title: "Error",
-        description: "Something went wrong, please try again latet",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Something went wrong, please try again latet',
+        variant: 'destructive',
       });
     }
   };
@@ -57,11 +58,11 @@ function CreateFormBtn() {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          variant={"outline"}
-          className="group border border-primary/20 h-[190px] items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4 bg-background"
+          variant={'outline'}
+          className='group flex h-[190px] flex-col items-center justify-center gap-4 border border-dashed border-primary/20 bg-background hover:cursor-pointer hover:border-primary'
         >
-          <FilePlus className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
-          <p className="font-bold text-xl text-muted-foreground group-hover:text-primary">
+          <LuFilePlus className='h-8 w-8 text-muted-foreground group-hover:text-primary' />
+          <p className='text-xl font-bold text-muted-foreground group-hover:text-primary'>
             Create new form
           </p>
         </Button>
@@ -74,10 +75,10 @@ function CreateFormBtn() {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form className="space-y-2">
+          <form className='space-y-2'>
             <FormField
               control={form.control}
-              name="name"
+              name='name'
               render={({ field }) => (
                 <FormItem>
                   <FormItem>
@@ -92,7 +93,7 @@ function CreateFormBtn() {
 
             <FormField
               control={form.control}
-              name="description"
+              name='description'
               render={({ field }) => (
                 <FormItem>
                   <FormItem>
@@ -109,14 +110,14 @@ function CreateFormBtn() {
         <DialogFooter>
           <DialogClose asChild>
             <Button
-              type="button"
-              className="w-full mt-4"
+              type='button'
+              className='mt-4 w-full'
               disabled={form.formState.isSubmitting}
               onClick={form.handleSubmit(onSubmit)}
             >
               {!form.formState.isSubmitting && <span>Save</span>}
               {form.formState.isSubmitting && (
-                <RefreshCwIcon className="animate-spin" />
+                <LuRefreshCw className='animate-spin' />
               )}
             </Button>
           </DialogClose>

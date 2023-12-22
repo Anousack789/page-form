@@ -1,11 +1,10 @@
-import React from "react";
-import { Button } from "../ui/button";
-import { View } from "lucide-react";
+import { LuView } from 'react-icons/lu';
+import { Button } from '../ui/button';
 
 function PreviewDialogBtn() {
   return (
-    <Button variant={"outline"} className="gap-2 h-full">
-      <View size={16} />
+    <Button variant={'outline'} className='h-full gap-2'>
+      <LuView size={16} />
       Preview
     </Button>
   );

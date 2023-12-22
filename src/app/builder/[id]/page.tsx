@@ -1,7 +1,7 @@
-import { GetFormById } from "@/actions/form";
-import FormBuilder from "@/components/FormBuilder";
-import { notFound } from "next/navigation";
-import React from "react";
+import { GetFormById } from '@/actions/form';
+import FormBuilder from '@/components/FormBuilder';
+import { notFound } from 'next/navigation';
+
 interface Props {
   params: {
     id: string;
