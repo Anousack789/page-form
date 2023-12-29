@@ -48,7 +48,7 @@ function Designer() {
               Drop here
             </p>
           )}
-          {droppable.isOver && (
+          {droppable.isOver && elements.length === 0 && (
             <div className='p4 w-full'>
               <div className='h-[120px] rounded-md bg-primary/20'></div>
             </div>
